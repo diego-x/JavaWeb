@@ -95,16 +95,18 @@ public class SearchApi extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //super.doGet(req, resp);
+        // 将处理的结果按照 如下json格式返回
+        /* writer.println("{\"responseData\":{\"results\":[" +
+        "{\"GsearchResultClass\":\"GnewsSearch\",\"title\":\"aaaa\",\"publisher\":\"bbbbbb\"}," +
+        "{\"GsearchResultClass\":\"GnewsSearch\",\"title\":\"cccc\",\"publisher\":\"dddddd\"}" +
+         "],\"cursor\":{\"estimatedResultCount\":2}}}");*/
+
 
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter writer = response.getWriter();
         HttpSession session;
 
-       /* writer.println("{\"responseData\":{\"results\":[" +
-                "{\"GsearchResultClass\":\"GnewsSearch\",\"title\":\"aaaa\",\"publisher\":\"bbbbbb\"}," +
-                "{\"GsearchResultClass\":\"GnewsSearch\",\"title\":\"cccc\",\"publisher\":\"dddddd\"}" +
-                "],\"cursor\":{\"estimatedResultCount\":2}}}");*/
         try {
             session  = request.getSession();
         }catch (Exception e){

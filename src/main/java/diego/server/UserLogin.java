@@ -19,8 +19,6 @@ public class UserLogin  extends HttpServlet  {
     public static String pageResError1 = "<script>alert('登入失败！！')</script>";
     public static String pageResOK = "<script>alert('登陆成功！！')</script>";
 
-
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //super.doPost(request, response);
