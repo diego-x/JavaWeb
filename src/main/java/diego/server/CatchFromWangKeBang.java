@@ -36,9 +36,13 @@ public class CatchFromWangKeBang extends HttpServlet {
     private boolean CheckUrl(String url1) throws MalformedURLException {
 
         URL url = new URL(url1);
-        if(url.getProtocol().equals("https") && url.getHost().equals("wangkebang.cn")
-        && url.getPath().equals("/")){
-            return true;
+        try {
+            if((url1.startsWith("https")||url1.startsWith("http")) &&
+                    url.getHost().equals("wangkebang.cn") && url.getPath().equals("/")){
+                return true;
+            }
+        }catch (Exception e){
+            return  false;
         }
         return false;
     }
@@ -270,8 +274,8 @@ public class CatchFromWangKeBang extends HttpServlet {
 
         if(session.getAttribute("isLogin") == null
                 || (boolean)session.getAttribute("isLogin") != true){
-            writer.println("<script>alert('未登录！！')</script>");
-            writer.println("<script>location.href='/login.jsp';</script>");
+            writer.println("{\"data\":\"未登录！！\"}");
+            //writer.println("<script>location.href='/login.jsp';</script>");
             writer.flush();
         }else{
             String url = request.getParameter("url");
@@ -280,15 +284,15 @@ public class CatchFromWangKeBang extends HttpServlet {
                 if(jsonObjects == null) jsonObjects = getProblemFromWKB2(url);
                 if(jsonObjects != null){
                     String res = getParseResult(jsonObjects);
-                    writer.println(res);
+                    writer.println("{\"data\":\" "+ res.replace("\"","\\\"") + "\"}");
                 }else{
-                    writer.println("<script>alert('页面解析错误，无法解析该页面！！')</script>");
-                    writer.println("<script>location.href='/wkbCatch.jsp';</script>");
+                    writer.println("{\"data\":\"页面解析错误，无法解析该页面！！\"}");
+                   // writer.println("<script>location.href='/wkbCatch.jsp';</script>");
                     writer.flush();
                 }
             }else{
-                writer.println("<script>alert('非法URL！！')</script>");
-                writer.println("<script>location.href='/wkbCatch.jsp';</script>");
+                writer.println("{\"data\":\"非法URL！！\"}");
+                //writer.println("<script>location.href='/wkbCatch.jsp';</script>");
                 writer.flush();
             }
         }

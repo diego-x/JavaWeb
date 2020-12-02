@@ -32,10 +32,9 @@
 
             <input type="submit" value="Submit" id="submitButton" />
 
-
             <ul class="icons">
                 <li class="web" title="Web Search" data-searchType="web">Web</li>
-                <li class="images" title="Image Search" data-searchType="images">Images</li>
+                <a href="wkbCatch.jsp"><li class="images" title="爬取网课帮" data-searchType="images">爬取网课帮</li></a>
                 <a href="fileUpload.jsp"><li class="news" title="导入数据" data-searchType="news">导入数据</li></a>
                 <li class="videos" title="Video Search" data-searchType="video">Videos</li>
             </ul>
