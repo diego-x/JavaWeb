@@ -36,7 +36,7 @@
                 <li class="web" title="Web Search" data-searchType="web">Web</li>
                 <a href="wkbCatch.jsp"><li class="images" title="爬取网课帮" data-searchType="images">爬取网课帮</li></a>
                 <a href="fileUpload.jsp"><li class="news" title="导入数据" data-searchType="news">导入数据</li></a>
-                <li class="videos" title="Video Search" data-searchType="video">Videos</li>
+                <a href="ResultToFile"><li class="videos" title="下载数据" data-searchType="video">下载数据</li></a>
             </ul>
         </fieldset>
     </form>
