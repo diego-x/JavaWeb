@@ -175,7 +175,9 @@ public class CatchFromWangKeBang extends HttpServlet {
                             str = str.trim();
 
                             //题目处理
-                            if(Pattern.matches(".*[0-9]+(\\u3001|\\u3010).*",str)){
+                            if(Pattern.matches(".*[0-9]+(\\u3001|\\u3010).*",str) && !str.contains("单选") &&
+                            !str.contains("多选") && !str.contains("<p>")
+                            ){
 
                                 if(str.contains("、"))
                                     tmpMap.put("problem",str.split("、")[1]);
@@ -237,19 +239,19 @@ public class CatchFromWangKeBang extends HttpServlet {
         }
     }
 
-    private String getParseResult(JSONObject[] jsonObjects){
+    public static String getParseResult(JSONObject[] jsonObjects,Integer flag){
 
         // 将解析的结果以 html形式返回
-        String result = "<center><button class=\"layui-btn\" lay-submit onclick=\"location.href='/JsonFileToDb'\">确认提交</button></center>" +
-                "<br><center><font size=\"6\" color=\"green\">解析结果</font></center>";
+        String result = "<br><br><center><font size=\"3\" color=\"green\">解析结果</font></center>";
         Integer count = 0;
         for(JSONObject jsonObject: jsonObjects ){
-            if(count > 100) {result += "<font size=\"5\" color=\"red\">最多显示100条</font>";break;}
-            result += "<font size=\"4\" color=\"blue\">&nbsp;&nbsp;&nbsp;&nbsp;题目 ：" + jsonObject.getString("problem") + "</font><br><br>";
+            if(count > flag) {result += "<font size=\"3\" color=\"red\">最多显示"+(flag+1)+"条</font>";break;}
+            result += "<font size=\"2\" color=\"#00FF00\">&nbsp;&nbsp;&nbsp;&nbsp;题目 ：" + jsonObject.getString("problem") + "</font><br><br>";
             result += "&nbsp;&nbsp;&nbsp;&nbsp;选项 :" + jsonObject.getString("options") + "<br><br>";
-            result +=  "&nbsp;&nbsp;&nbsp;&nbsp;<font size=\"4\" color=\"red\">答案：" + jsonObject.getString("answer") + "</font><br><br>";
+            result +=  "&nbsp;&nbsp;&nbsp;&nbsp;<font size=\"2\" color=\"#00FFFF\">答案：" + jsonObject.getString("answer") + "</font><br><br>";
             count++;
         }
+
         return  result;//.replace("\"","\\\"");
     }
 
@@ -278,12 +280,15 @@ public class CatchFromWangKeBang extends HttpServlet {
             //writer.println("<script>location.href='/login.jsp';</script>");
             writer.flush();
         }else{
-            String url = request.getParameter("url");
+            String url = request.getParameter("url").trim();
             if(CheckUrl(url)){
                 JSONObject[] jsonObjects =  getProblemFromWKB1(url);
                 if(jsonObjects == null) jsonObjects = getProblemFromWKB2(url);
                 if(jsonObjects != null){
-                    String res = getParseResult(jsonObjects);
+                    session.setAttribute("JSONObjectArray",jsonObjects);
+                    String res = CatchFromWangKeBang.getParseResult(jsonObjects,4);
+                    res += "<br><br><buttun class=\"btn btn-default\" type=\"button\" onclick=\"location.href='/ShowResult'\">查看完整数据</buttun>";
+                    res += "<buttun class=\"btn btn-default\" type=\"button\" onclick=\"location.href='/JsonFileToDb'\">导入数据库</buttun>";
                     writer.println("{\"data\":\" "+ res.replace("\"","\\\"") + "\"}");
                 }else{
                     writer.println("{\"data\":\"页面解析错误，无法解析该页面！！\"}");

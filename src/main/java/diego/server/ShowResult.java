@@ -1,25 +1,25 @@
 package diego.server;
 
 import com.alibaba.fastjson.JSONObject;
-import diego.module.JsonFile;
-import diego.module.Problem;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/JsonFileToDb")
-public class JsonFileToDb extends HttpServlet {
+@WebServlet("/ShowResult")
+public class ShowResult extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //super.doPost(req, resp);
+        //super.doGet(request, response);
+
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter writer = response.getWriter();
@@ -37,26 +37,17 @@ public class JsonFileToDb extends HttpServlet {
         }else{
 
             JSONObject[] jsonObjects = (JSONObject[]) session.getAttribute("JSONObjectArray");
-            JsonFile jsonFile = new JsonFile();
-            String res = jsonFile.JSONObjectArrayInsertDb(jsonObjects);
-
-            if(res == null){
-                writer.println("<script>alert('解析错误！！')</script>");
-                writer.println("<script>location.href='/index.jsp';</script>");
+            if( jsonObjects!= null){
+                writer.println("<title>解析结果</title>");
+                writer.println(CatchFromWangKeBang.getParseResult(jsonObjects,300));
+                writer.println("<buttun  type=\"button\" onclick=\"location.href='/JsonFileToDb'\">导入数据库</buttun>");
                 writer.flush();
             }else{
-                if(res == "true"){
-                    session.setAttribute("JSONObjectArray","");
-                    writer.println("<script>alert('导入成功！！')</script>");
-                    writer.println("<script>location.href='/index.jsp';</script>");
-                    writer.flush();
-                }else{
-                    writer.println("<script>alert('导入失败！！')</script>");
-                    writer.println("<script>location.href='/index.jsp';</script>");
-                    writer.flush();
-                }
+                writer.println("<script>alert('没有爬取结果！！')</script>");
+                writer.println("<script>location.href='/wkbCatch';</script>");
+                writer.flush();
             }
-
         }
+
     }
 }

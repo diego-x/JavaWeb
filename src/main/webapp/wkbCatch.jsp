@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div id="top-image">
+<div id="top-image" style="color: ">
   <div id="content" class="container center-block">
     <div class="jumbotron">
       <div class="container">
@@ -25,8 +25,8 @@
           <span class="input-group-btn">
           <button class="btn btn-default" type="button" onclick="send()">爬取</button>
           </span> </div>
-          <div id="res" class="container"><div>
       </div>
+      <div id="res"><div>
     </div>
   </div>
 </div>
@@ -59,6 +59,7 @@ function send(){
         }
     });
 }
+
 </script>
 
 

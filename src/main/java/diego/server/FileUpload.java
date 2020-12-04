@@ -101,9 +101,7 @@ public class FileUpload  extends HttpServlet {
         try {
             session  = request.getSession();
         }catch (Exception e){
-            writer.println(pageError2);
-            writer.println("<script>location.href='/login.jsp';</script>");
-            writer.flush();
+            response.sendRedirect("/login.jsp");
             return;
         }
 
@@ -158,9 +156,7 @@ public class FileUpload  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //super.doGet(request, response);
-        PrintWriter writer = response.getWriter();
-        writer.println("<script>location.href='/fileUpload.jsp';</script>");
-        writer.flush();
+        response.sendRedirect("/fileUpload.jsp");
 
     }
 }
