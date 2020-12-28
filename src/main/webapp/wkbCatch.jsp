@@ -45,7 +45,7 @@ function send(){
         //请求方式post /get
         type:'post',
         //请求地址
-        url:'http://127.0.0.1/CatchFromWKB',
+        url:'http://127.0.0.1:8080/CatchFromWKB',
         //请求数据类型
         dataType:'json',
         //传输数据

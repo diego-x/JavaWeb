@@ -1,10 +1,12 @@
 diego\module\User.class
 diego\server\JsonFileToDb.class
+diego\server\CatchFromWangKeBang.class
 diego\server\UserLogin.class
 diego\server\FileUpload.class
 diego\module\Problem.class
-diego\server\ShowIndex.class
 diego\module\Db.class
+diego\server\ResultToFile.class
 diego\server\SearchApi.class
 diego\module\JsonFile.class
+diego\server\ShowResult.class
 Filter\EncodeFilter.class
